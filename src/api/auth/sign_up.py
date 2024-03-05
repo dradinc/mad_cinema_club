@@ -44,6 +44,13 @@ class SignUp(Resource):
                 message=f'Аргумент \'password\' отсутствует или не содержит значений'
             )
 
+        # Проверяем нет ли пользователя с указанным Email
+        if UsersModel.find_user_by_email(email=request_args['email']):
+            return json_response(
+                status_=400,
+                message='Пользователь с данным E-mail уже существует'
+            )
+
         # Создаем нового пользователя
         new_user = UsersModel(**request_args)
         new_user.add_new_user()
