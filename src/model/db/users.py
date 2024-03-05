@@ -13,6 +13,7 @@ class UsersModel(app_db.Model):
     email = Column(String(64), nullable=False)
     password = Column(String(512), nullable=False)
     balance = Column(Integer, default=0)
+    code = Column(String(6))
 
     def __init__(self, **kwargs):
         self.name = kwargs.get('name')
@@ -21,6 +22,16 @@ class UsersModel(app_db.Model):
 
     def add_new_user(self):
         app_db.session.add(self)
+        app_db.session.commit()
+
+    def edit_user(self, **kwargs):
+        for key, value in kwargs.items():
+            if key == 'id':
+                continue
+            elif key == 'password':
+                setattr(self, key, generate_password_hash(value))
+                continue
+            setattr(self, key, value)
         app_db.session.commit()
 
     def check_password(self, password):
