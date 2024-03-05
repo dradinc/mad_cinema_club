@@ -9,6 +9,8 @@ jwt_manager = JWTManager(app)
 
 # Resource import
 from src.api.test_request import TestRequest
+from src.api.auth.sign_up import SignUp
 
 # api endpoint
 app_api.add_resource(TestRequest, '/api/test')
+app_api.add_resource(SignUp, '/api/sign-up')
