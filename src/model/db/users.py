@@ -4,7 +4,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from src.model.db import app_db
 
 
-class Users(app_db.Model):
+class UsersModel(app_db.Model):
     __tablename__ = 'users'
 
     # columns
