@@ -13,3 +13,16 @@ class Users(app_db.Model):
     email = Column(String(64), nullable=False)
     password = Column(String(512), nullable=False)
     balance = Column(Integer, default=0)
+
+    def __init__(self, **kwargs):
+        self.name = kwargs.get('name')
+        self.email = kwargs.get('email')
+        self.password = generate_password_hash(kwargs.get('password'))
+
+    def add_new_user(self):
+        app_db.session.add(self)
+        app_db.session.commit()
+
+    @classmethod
+    def find_user_by_email(cls, email):
+        return cls.query.filter_by(email=email).first()
