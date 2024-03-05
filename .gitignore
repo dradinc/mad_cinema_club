@@ -1,0 +1,10 @@
+
+.venv/
+
+.idea/
+*.xml
+
+__pycache__/
+*.pyc
+
+instance/
