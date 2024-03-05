@@ -31,17 +31,17 @@ class SignUp(Resource):
         if not request_args['name']:
             return json_response(
                 status_=400,
-                message=f'Аргумент \'name\' не содержит значений'
+                message=f'Аргумент \'name\' отсутствует или не содержит значений'
             )
         elif not request_args['email']:
             return json_response(
                 status_=400,
-                message=f'Аргумент \'email\' не содержит значений'
+                message=f'Аргумент \'email\' отсутствует или не содержит значений'
             )
         elif not request_args['password']:
             return json_response(
                 status_=400,
-                message=f'Аргумент \'password\' не содержит значений'
+                message=f'Аргумент \'password\' отсутствует или не содержит значений'
             )
 
         # Создаем нового пользователя
