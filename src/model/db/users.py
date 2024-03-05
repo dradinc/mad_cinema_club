@@ -23,6 +23,9 @@ class UsersModel(app_db.Model):
         app_db.session.add(self)
         app_db.session.commit()
 
+    def check_password(self, password):
+        return check_password_hash(self.password, password)
+
     @classmethod
     def find_user_by_email(cls, email):
         return cls.query.filter_by(email=email).first()
