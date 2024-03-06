@@ -15,6 +15,8 @@ from src.model.db.cinema import CinemaModel
 from src.model.db.halls import HallsModel
 from src.model.db.halls.scheme import SchemeModel
 from src.model.db.halls.rows_seats import RowsSeatsModel
+# Sessions
+from src.model.db.films.sessions import SessionsModel
 
 with app.app_context():
     app_db.create_all()

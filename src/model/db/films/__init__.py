@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String
+from sqlalchemy.orm import relationship
 
 from src.modules.db import app_db
 
@@ -19,6 +20,8 @@ class FilmsModel(app_db.Model):
     age = Column(String(3), nullable=False)
     review_title = Column(String(128), nullable=True)
     review_text = Column(String, nullable=False)
+    # relationships
+    sessions = relationship('SessionsModel', 'film')
 
     @classmethod
     def get_films_for_main_page(cls):
