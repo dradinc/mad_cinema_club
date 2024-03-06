@@ -1,3 +1,5 @@
+import datetime
+
 from sqlalchemy import Column, Integer, Date, Time, String, ForeignKey
 from sqlalchemy.orm import relationship
 
@@ -19,3 +21,13 @@ class SessionsModel(app_db.Model):
     # hall relationship
     hall_id = Column(Integer, ForeignKey('halls.id'))
     hall = relationship('HallsModel', back_populates='sessions')
+
+    @classmethod
+    def get_sessions_for_cinema(cls, cinema_id, date: datetime.date):
+        all_list = cls.query.order_by(cls.time).all()
+        request_list = []
+        for item in all_list:
+            if item.hall.cinema_id == int(cinema_id) and item.date == date:
+                request_list.append(item)
+        return request_list
+        #return cls.query.filter(cls.hall.cinema_id == cinema_id).all()

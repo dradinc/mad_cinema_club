@@ -21,7 +21,7 @@ class FilmsModel(app_db.Model):
     review_title = Column(String(128), nullable=True)
     review_text = Column(String, nullable=False)
     # relationships
-    sessions = relationship('SessionsModel', 'film')
+    sessions = relationship('SessionsModel', back_populates='film')
 
     @classmethod
     def get_films_for_main_page(cls):

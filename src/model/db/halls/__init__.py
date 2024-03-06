@@ -17,4 +17,4 @@ class HallsModel(app_db.Model):
     scheme_id = Column(Integer, ForeignKey('hall_scheme.id'))
     scheme = relationship('SchemeModel', back_populates='halls')
     # relationships
-    sessions = relationship('SessionsModel', 'hall')
+    sessions = relationship('SessionsModel', back_populates='hall')

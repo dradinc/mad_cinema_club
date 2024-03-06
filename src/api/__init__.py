@@ -18,6 +18,7 @@ from src.api.films.main_screen import MainScreenFilms
 
 # Cinema
 from src.api.cinema.cinema_screen import CinemaScreen
+from src.api.cinema.sessions import CinemaSessions
 
 # News
 from src.api.news import News
@@ -38,6 +39,7 @@ app_api.add_resource(MainScreenFilms, '/api/films/main-screen')
 
 # Cinema
 app_api.add_resource(CinemaScreen, '/api/cinema')
+app_api.add_resource(CinemaSessions, '/api/cinema/<cinema_id>/sessions')
 
 # News
 app_api.add_resource(News, '/api/news')
