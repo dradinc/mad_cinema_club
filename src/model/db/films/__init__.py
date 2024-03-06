@@ -1,0 +1,25 @@
+from sqlalchemy import Column, Integer, String
+
+from src.modules.db import app_db
+
+
+class FilmsModel(app_db.Model):
+    __tablename__ = 'films'
+
+    # columns
+    id = Column(Integer, primary_key=True)
+    title = Column(String(64), nullable=False)
+    poster = Column(String(32), nullable=False)
+    genre = Column(String, nullable=False)
+    trailers = Column(String, nullable=False)
+    eng_title = Column(String(64), nullable=True)
+    god = Column(String(4), nullable=False)
+    country = Column(String(32), nullable=False)
+    timing = Column(Integer, nullable=False)
+    age = Column(String(3), nullable=False)
+    review_title = Column(String(128), nullable=True)
+    review_text = Column(String, nullable=False)
+
+    @classmethod
+    def get_films_for_main_page(cls):
+        return cls.query.limit(5).all()
