@@ -30,4 +30,12 @@ class SessionsModel(app_db.Model):
             if item.hall.cinema_id == int(cinema_id) and item.date == date:
                 request_list.append(item)
         return request_list
-        #return cls.query.filter(cls.hall.cinema_id == cinema_id).all()
+
+    @classmethod
+    def get_sessions_for_films(cls, film_id, date: datetime.date):
+        all_list = cls.query.order_by(cls.time).all()
+        request_list = []
+        for item in all_list:
+            if item.film_id == int(film_id) and item.date == date:
+                request_list.append(item)
+        return request_list
