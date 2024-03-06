@@ -1,7 +1,7 @@
 from flask_restful import Resource, reqparse
 from flask_json import json_response
 
-from src.model.db.users import UsersModel
+from src.modules.db import UsersModel
 
 sign_up_parse = reqparse.RequestParser()
 sign_up_parse.add_argument(

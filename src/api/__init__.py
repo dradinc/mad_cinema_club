@@ -1,7 +1,7 @@
 from flask_restful import Api
 
 from src import app
-
+from src.modules.jwt import app_jwt
 
 app_api = Api(app)
 
@@ -16,6 +16,6 @@ app_api.add_resource(TestRequest, '/api/test')
 app_api.add_resource(TestJwtRequest, '/api/test-jwt')
 app_api.add_resource(SignUp, '/api/sign-up')
 app_api.add_resource(SignIn, '/api/sign-in')
-app_api.add_resource(SendCode, '/api/send-code')
-app_api.add_resource(CheckCode, '/api/check-code')
-app_api.add_resource(ResetPassword, '/api/reset-password')
+app_api.add_resource(SendCode, '/api/forgot-password/send-code')
+app_api.add_resource(CheckCode, '/api/forgot-password/check-code')
+app_api.add_resource(ResetPassword, '/api/forgot-password/reset-password')

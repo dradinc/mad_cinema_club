@@ -4,8 +4,8 @@ from flask_restful import Resource, reqparse
 from flask_json import json_response
 from flask_mail import Message
 
-from src.model.db.users import UsersModel
-from src.mail import app_mail
+from src.modules.db import UsersModel
+from src.modules.mail import app_mail
 
 
 send_code_parse = reqparse.RequestParser()

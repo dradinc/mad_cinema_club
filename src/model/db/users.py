@@ -1,7 +1,7 @@
 from sqlalchemy import Column, String, Integer
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from src.model.db import app_db
+from src.modules.db import app_db
 
 
 class UsersModel(app_db.Model):

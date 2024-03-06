@@ -2,10 +2,7 @@ from flask_restful import Resource, reqparse
 from flask_json import json_response
 from flask_jwt_extended import create_access_token
 
-from src.model.db.users import UsersModel
-from src.api.jwt import app_jwt
-
-from src import app
+from src.modules.db import UsersModel
 
 sign_in_parse = reqparse.RequestParser()
 sign_in_parse.add_argument(
