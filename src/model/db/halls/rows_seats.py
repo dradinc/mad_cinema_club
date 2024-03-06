@@ -10,8 +10,9 @@ class RowsSeatsModel(app_db.Model):
     # columns
     id = Column(Integer, primary_key=True)
     row = Column(Integer, nullable=False)
-    seat = Column(Integer, nullable=False)
-    is_empty = Column(Integer, default=False)
+    position = Column(Integer, nullable=False)
+    seat = Column(Integer, nullable=True)
+    is_empty = Column(Boolean, nullable=False, default=False)
     # scheme relationships
     scheme_id = Column(Integer, ForeignKey('hall_scheme.id'))
     scheme = relationship('SchemeModel', back_populates='rows_seats')
