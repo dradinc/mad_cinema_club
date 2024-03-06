@@ -15,6 +15,7 @@ from src.api.auth.forgot_password import SendCode, CheckCode, ResetPassword
 
 # Films
 from src.api.films.main_screen import MainScreenFilms
+from src.api.films.current_film import CurrentFilm
 
 # Cinema
 from src.api.cinema.cinema_screen import CinemaScreen
@@ -36,6 +37,7 @@ app_api.add_resource(ResetPassword, '/api/forgot-password/reset-password')
 
 # Films
 app_api.add_resource(MainScreenFilms, '/api/films/main-screen')
+app_api.add_resource(CurrentFilm, '/api/films/<film_id>')
 
 # Cinema
 app_api.add_resource(CinemaScreen, '/api/cinema')
