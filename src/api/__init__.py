@@ -16,6 +16,9 @@ from src.api.auth.forgot_password import SendCode, CheckCode, ResetPassword
 # Films
 from src.api.films.main_screen import MainScreenFilms
 
+# News
+from src.api.news import News
+
 # api endpoint
 app_api.add_resource(TestRequest, '/api/test')
 app_api.add_resource(TestJwtRequest, '/api/test-jwt')
@@ -29,3 +32,6 @@ app_api.add_resource(ResetPassword, '/api/forgot-password/reset-password')
 
 # Films
 app_api.add_resource(MainScreenFilms, '/api/films/main-screen')
+
+# News
+app_api.add_resource(News, '/api/news')
