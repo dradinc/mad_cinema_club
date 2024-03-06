@@ -23,7 +23,8 @@ class MainScreenFilms(Resource):
                     'id': film.id,
                     'title': film.title,
                     'poster': url_for('static', filename=f'posters/{film.poster}'),
-                    'genre': genre_list
+                    'genre': genre_list,
+                    'age': film.age
                 }
             )
 
