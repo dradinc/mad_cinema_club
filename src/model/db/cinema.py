@@ -5,9 +5,16 @@ from src.modules.db import app_db
 
 
 class CinemaModel(app_db.Model):
+    """
+    Таблица хранит информацию о кинотеатрах, такие как название и координаты \n
+    < id > - идентификатор кинотеатра \n
+    < title > - название кинотеатра \n
+    < latitude > - широта расположения кинотеатра \n
+    < longitude > - долгота расположения кинотеатра
+    """
     __tablename__ = 'cinema'
 
-    #column
+    # column
     id = Column(Integer, primary_key=True)
     title = Column(String(32), nullable=False)
     latitude = Column(Double, nullable=False)

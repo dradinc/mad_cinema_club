@@ -5,6 +5,16 @@ from src.modules.db import app_db
 
 
 class RowsSeatsModel(app_db.Model):
+    """
+    Таблица предназначенная для формирования схемы зала.
+    Указываются ряды и места на данных рядах. Все это привязывается к схеме зала\n
+    < id > - идентификатор\n
+    < row > - ряд сидений\n
+    < position > - позиция места в ряду\n
+    < seat > - номер места в ряду\n
+    < is_empty > - предназначено для указания прохода\n
+    < scheme_id > - схема к которой принадлежат места\n
+    """
     __tablename__ = 'rows_seats'
 
     # columns
@@ -18,4 +28,3 @@ class RowsSeatsModel(app_db.Model):
     scheme = relationship('SchemeModel', back_populates='rows_seats')
     # relationships
     tickets = relationship('TicketsModel', back_populates='seat')
-

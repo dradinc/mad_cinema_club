@@ -7,6 +7,16 @@ from src.modules.db import app_db
 
 
 class SessionsModel(app_db.Model):
+    """
+    Таблица предназначена для хранения информации по сеансам разных фильмов в разных залах=>кинотеатрах\n
+    < id > - первичный ключ\n
+    < date > - дата проведения сеанса\n
+    < time > - время назначено начала сеанса\n
+    < price > - стоимость билета на сеанс\n
+    < cinema_type > - формат фильма (2D или 3D)\n
+    < film_id > - фильм на сеансе\n
+    < hall_id > - зал для сеанса (оттуда же берется кинотеатр)
+    """
     __tablename__ = 'sessions'
 
     # column
@@ -26,6 +36,12 @@ class SessionsModel(app_db.Model):
 
     @classmethod
     def get_sessions_for_cinema(cls, cinema_id, date: datetime.date):
+        """
+        Возвращает список сессий для кинотеатра включая все фильмы, которые в нем показывают
+        :param cinema_id:
+        :param date:
+        :return:
+        """
         all_list = cls.query.order_by(cls.time).all()
         request_list = []
         for item in all_list:
@@ -35,6 +51,12 @@ class SessionsModel(app_db.Model):
 
     @classmethod
     def get_sessions_for_films(cls, film_id, date: datetime.date):
+        """
+        Возвращает список сессий для фильма включая все кинотеатры
+        :param film_id:
+        :param date:
+        :return:
+        """
         all_list = cls.query.order_by(cls.time).all()
         request_list = []
         for item in all_list:

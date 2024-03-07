@@ -6,6 +6,15 @@ from src.modules.db import app_db
 
 
 class UsersModel(app_db.Model):
+    """
+    Таблица предназначенная для хранения информации о пользователях.\n
+    < id > - идентификатор пользователя\n
+    < name > - имя пользователя\n
+    < email > - почта пользователя для верификации\n
+    < password > - пароль пользователя\n
+    < balance > - баланс баллов пользователя\n
+    < code > - поле для хранения кода верификации пользователя\n
+    """
     __tablename__ = 'users'
 
     # columns
@@ -13,7 +22,7 @@ class UsersModel(app_db.Model):
     name = Column(String(64), nullable=False)
     email = Column(String(64), nullable=False)
     password = Column(String(512), nullable=False)
-    balance = Column(Integer, default=0)
+    balance = Column(Integer, nullable=False, default=0)
     code = Column(String(6))
     # relationships
     tickets = relationship('TicketsModel', back_populates='user')
@@ -24,10 +33,19 @@ class UsersModel(app_db.Model):
         self.password = generate_password_hash(kwargs.get('password'))
 
     def add_new_user(self):
+        """
+        Метод добавляющий нового пользователя в систему
+        :return:
+        """
         app_db.session.add(self)
         app_db.session.commit()
 
     def edit_user(self, **kwargs):
+        """
+        Метод обновляющий данные пользователя (кроме id)
+        :param kwargs:
+        :return:
+        """
         for key, value in kwargs.items():
             if key == 'id':
                 continue
