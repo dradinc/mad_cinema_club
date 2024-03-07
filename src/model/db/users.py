@@ -1,4 +1,5 @@
 from sqlalchemy import Column, String, Integer
+from sqlalchemy.orm import relationship
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from src.modules.db import app_db
@@ -14,6 +15,8 @@ class UsersModel(app_db.Model):
     password = Column(String(512), nullable=False)
     balance = Column(Integer, default=0)
     code = Column(String(6))
+    # relationships
+    tickets = relationship('TicketsModel', back_populates='user')
 
     def __init__(self, **kwargs):
         self.name = kwargs.get('name')

@@ -21,6 +21,8 @@ class SessionsModel(app_db.Model):
     # hall relationship
     hall_id = Column(Integer, ForeignKey('halls.id'))
     hall = relationship('HallsModel', back_populates='sessions')
+    # relationships
+    tickets = relationship('TicketsModel', back_populates='session')
 
     @classmethod
     def get_sessions_for_cinema(cls, cinema_id, date: datetime.date):

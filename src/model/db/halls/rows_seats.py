@@ -16,4 +16,6 @@ class RowsSeatsModel(app_db.Model):
     # scheme relationships
     scheme_id = Column(Integer, ForeignKey('hall_scheme.id'))
     scheme = relationship('SchemeModel', back_populates='rows_seats')
+    # relationships
+    tickets = relationship('TicketsModel', back_populates='seat')
 
