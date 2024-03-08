@@ -49,4 +49,4 @@ app_api.add_resource(CinemaSessions, '/api/cinema/<cinema_id>/sessions')
 app_api.add_resource(News, '/api/news')
 
 # Session
-app_api.add_resource(SessionHall, '/api/session/<session_id>')
+app_api.add_resource(SessionHall, '/api/session/<int:session_id>')

@@ -3,6 +3,7 @@ from sqlalchemy.orm import relationship
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from src.modules.db import app_db
+from src.modules.jwt import app_jwt
 
 
 class UsersModel(app_db.Model):
@@ -61,3 +62,9 @@ class UsersModel(app_db.Model):
     @classmethod
     def find_user_by_email(cls, email):
         return cls.query.filter_by(email=email).first()
+
+
+@app_jwt.user_lookup_loader
+def user_lookup_callback(_jwt_header, jwt_data):
+    identity = jwt_data['sub']
+    return UsersModel.query.filter(UsersModel.id == identity).one_or_none()

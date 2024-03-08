@@ -1,13 +1,17 @@
+import random
+import string
+
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 
 from src.modules.db import app_db
+from src.model.db.users import UsersModel
 
 
 class TicketsModel(app_db.Model):
     """
     Таблица для хранения билетов пользователей на сеансы фильмов.\n
-    Билет не считается действительным без выданного номера билета (number),\n
+    Билет не считается действительным без выданного номера билета (number), \n
     До тех пор он считается просто забронированным местом.\n
     < id > - идентификатор билета\n
     < number > - номер билета\n
@@ -29,3 +33,29 @@ class TicketsModel(app_db.Model):
     # Внешний ключ с таблицей users
     user_id = Column(Integer, ForeignKey('users.id'))
     user = relationship('UsersModel', back_populates='tickets')
+
+    def __init__(self, session_id: int, seat_id: int, user_id: int):
+        self.sessions_id = session_id
+        self.seat_id = seat_id
+        self.user_id = user_id
+
+    def add_ticket(self):
+        app_db.session.add(self)
+        app_db.session.commit()
+
+    @classmethod
+    def pay_ticket(cls, session_id, current_user: UsersModel):
+        tickets_list_for_session = []
+        for ticket_user in current_user.tickets:
+            if ticket_user.sessions_id == session_id:
+                tickets_list_for_session.append(ticket_user)
+        for ticket in tickets_list_for_session:
+            if not ticket.number:
+                ticket.generate_ticket_number()
+
+    def generate_ticket_number(self):
+        letters = string.ascii_uppercase
+        digits = string.digits
+        ticket_number = ''.join(random.choice(letters + digits) for _ in range(10))
+        setattr(self, 'number', ticket_number)
+        app_db.session.commit()

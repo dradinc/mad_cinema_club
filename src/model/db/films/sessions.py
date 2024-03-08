@@ -4,6 +4,7 @@ from sqlalchemy import Column, Integer, Date, Time, String, ForeignKey
 from sqlalchemy.orm import relationship
 
 from src.modules.db import app_db
+from src.model.db.tickets import TicketsModel
 
 
 class SessionsModel(app_db.Model):
@@ -65,7 +66,7 @@ class SessionsModel(app_db.Model):
         return request_list
 
     @classmethod
-    def get_session(cls, session_id):
+    def get_session(cls, session_id: int):
         return cls.query.filter(cls.id == session_id).first()
 
     def get_hall_scheme(self):
@@ -73,10 +74,10 @@ class SessionsModel(app_db.Model):
         for seat in self.hall.scheme.rows_seats:
             is_continue = False
 
-            seat_state = 0
+            seat_state = False
             for ticket in self.tickets:
                 if seat.id == ticket.seat_id:
-                    seat_state = 1
+                    seat_state = True
                     break
 
             for item in scheme:
@@ -84,7 +85,7 @@ class SessionsModel(app_db.Model):
                     item['seats'].append({
                         'id': seat.id,
                         'is_empty': seat.is_empty,
-                        'state': seat_state
+                        'reservation': seat_state
                     })
                     is_continue = True
                     break
@@ -97,7 +98,17 @@ class SessionsModel(app_db.Model):
                 'seats': [{
                     'id': seat.id,
                     'is_empty': seat.is_empty,
-                    'state': seat_state
+                    'reservation': seat_state
                 }]
             })
         return scheme
+
+    @classmethod
+    def select_seat(cls, session_id: int, user_id: int, seat_id: int):
+        current_session = cls.get_session(session_id)
+        for ticket in current_session.tickets:
+            if ticket.seat_id == seat_id:
+                return False
+        ticket = TicketsModel(session_id, seat_id, user_id)
+        ticket.add_ticket()
+        return True
