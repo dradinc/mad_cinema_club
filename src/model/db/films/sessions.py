@@ -108,9 +108,10 @@ class SessionsModel(app_db.Model):
         current_session = cls.get_session(session_id)
         for ticket in current_session.tickets:
             if ticket.seat_id == seat_id:
-                if ticket.user_id == user_id:
-                    TicketsModel.del_ticket(ticket.id)
-                    return True
+                if not ticket.number:
+                    if ticket.user_id == user_id:
+                        TicketsModel.del_ticket(ticket.id)
+                        return True
                 return False
         ticket = TicketsModel(session_id, seat_id, user_id)
         ticket.add_ticket()
