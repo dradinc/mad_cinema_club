@@ -63,3 +63,41 @@ class SessionsModel(app_db.Model):
             if item.film_id == int(film_id) and item.date == date:
                 request_list.append(item)
         return request_list
+
+    @classmethod
+    def get_session(cls, session_id):
+        return cls.query.filter(cls.id == session_id).first()
+
+    def get_hall_scheme(self):
+        scheme = []
+        for seat in self.hall.scheme.rows_seats:
+            is_continue = False
+
+            seat_state = 0
+            for ticket in self.tickets:
+                if seat.id == ticket.seat_id:
+                    seat_state = 1
+                    break
+
+            for item in scheme:
+                if item['row'] == seat.row:
+                    item['seats'].append({
+                        'id': seat.id,
+                        'is_empty': seat.is_empty,
+                        'state': seat_state
+                    })
+                    is_continue = True
+                    break
+
+            if is_continue:
+                continue
+
+            scheme.append({
+                'row': seat.row,
+                'seats': [{
+                    'id': seat.id,
+                    'is_empty': seat.is_empty,
+                    'state': seat_state
+                }]
+            })
+        return scheme

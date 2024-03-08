@@ -12,18 +12,18 @@ from src.api.test_request import TestRequest, TestJwtRequest
 from src.api.auth.sign_up import SignUp
 from src.api.auth.sign_in import SignIn
 from src.api.auth.forgot_password import SendCode, CheckCode, ResetPassword
-
 # Films
 from src.api.films.main_screen import MainScreenFilms
 from src.api.films.current_film import CurrentFilm
 from src.api.films.sessions import FilmSessions
-
 # Cinema
 from src.api.cinema.cinema_screen import CinemaScreen
 from src.api.cinema.sessions import CinemaSessions
-
 # News
 from src.api.news import News
+# Session
+from src.api.session.session_hall import SessionHall
+
 
 # api endpoint
 app_api.add_resource(TestRequest, '/api/test')
@@ -47,3 +47,6 @@ app_api.add_resource(CinemaSessions, '/api/cinema/<cinema_id>/sessions')
 
 # News
 app_api.add_resource(News, '/api/news')
+
+# Session
+app_api.add_resource(SessionHall, '/api/session/<session_id>')
