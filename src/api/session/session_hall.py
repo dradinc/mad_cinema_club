@@ -3,6 +3,7 @@ from flask_json import json_response
 from flask_jwt_extended import jwt_required, current_user
 
 from src.model.db.films.sessions import SessionsModel
+from src.model.db.tickets import TicketsModel
 
 
 session_hall_parser = reqparse.RequestParser()
@@ -36,3 +37,9 @@ class SessionHall(Resource):
             return json_response(status_=200)
         else:
             return json_response(status_=409, message='Выбранное место уже занято :(')
+
+    @jwt_required()
+    def put(self, session_id: int):
+        TicketsModel.pay_ticket(session_id, current_user)
+        return json_response(status_=200)
+
