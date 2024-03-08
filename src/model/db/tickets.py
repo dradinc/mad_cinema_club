@@ -44,6 +44,12 @@ class TicketsModel(app_db.Model):
         app_db.session.commit()
 
     @classmethod
+    def del_ticket(cls, ticket_id):
+        ticket = cls.query.filter(cls.id == ticket_id).first()
+        app_db.session.delete(ticket)
+        app_db.session.commit()
+
+    @classmethod
     def pay_ticket(cls, session_id, current_user: UsersModel):
         tickets_list_for_session = []
         for ticket_user in current_user.tickets:
