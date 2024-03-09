@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Integer
+from sqlalchemy import Column, String, Integer, Boolean
 from sqlalchemy.orm import relationship
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -25,6 +25,7 @@ class UsersModel(app_db.Model):
     password = Column(String(512), nullable=False)
     balance = Column(Integer, nullable=False, default=0)
     code = Column(String(6))
+    is_checker = Column(Boolean, nullable=False, default=False)
     # relationships
     tickets = relationship('TicketsModel', back_populates='user')
 

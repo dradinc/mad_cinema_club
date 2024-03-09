@@ -12,6 +12,8 @@ from src.api.test_request import TestRequest, TestJwtRequest
 from src.api.auth.sign_up import SignUp
 from src.api.auth.sign_in import SignIn
 from src.api.auth.forgot_password import SendCode, CheckCode, ResetPassword
+# Auth checker app
+from src.api.check_ticket.auth import AuthCheckedApp
 # Films
 from src.api.films.main_screen import MainScreenFilms
 from src.api.films.current_film import CurrentFilm
@@ -36,6 +38,8 @@ app_api.add_resource(SignIn, '/api/sign-in')
 app_api.add_resource(SendCode, '/api/forgot-password/send-code')
 app_api.add_resource(CheckCode, '/api/forgot-password/check-code')
 app_api.add_resource(ResetPassword, '/api/forgot-password/reset-password')
+# Auth checker app
+app_api.add_resource(AuthCheckedApp, '/api/checker/sign-in')
 # Films
 app_api.add_resource(MainScreenFilms, '/api/films/main-screen')
 app_api.add_resource(CurrentFilm, '/api/films/<film_id>')
