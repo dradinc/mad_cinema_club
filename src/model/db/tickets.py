@@ -1,7 +1,7 @@
 import random
 import string
 
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
 from sqlalchemy.orm import relationship
 
 from src.modules.db import app_db
@@ -33,6 +33,7 @@ class TicketsModel(app_db.Model):
     # Внешний ключ с таблицей users
     user_id = Column(Integer, ForeignKey('users.id'))
     user = relationship('UsersModel', back_populates='tickets')
+    is_check = Column(Boolean, nullable=False, default=False)
 
     def __init__(self, session_id: int, seat_id: int, user_id: int):
         self.sessions_id = session_id
@@ -65,3 +66,7 @@ class TicketsModel(app_db.Model):
         ticket_number = ''.join(random.choice(letters + digits) for _ in range(10))
         setattr(self, 'number', ticket_number)
         app_db.session.commit()
+
+    @classmethod
+    def get_user_tickets(cls, user_id):
+        return cls.query.filter(cls.user_id == user_id, cls.number != None).all()
