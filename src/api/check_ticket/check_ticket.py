@@ -6,7 +6,6 @@ from flask_jwt_extended import jwt_required, current_user
 
 from src.model.db.tickets import TicketsModel
 
-from src import app
 
 class CheckTicket(Resource):
 
