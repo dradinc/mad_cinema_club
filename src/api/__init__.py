@@ -27,6 +27,7 @@ from src.api.news import News
 from src.api.session.session_hall import SessionHall
 # Tickets
 from src.api.tickets import Tickets
+from src.api.check_ticket.check_ticket import CheckTicket
 
 
 # api endpoint
@@ -38,18 +39,19 @@ app_api.add_resource(SignIn, '/api/sign-in')
 app_api.add_resource(SendCode, '/api/forgot-password/send-code')
 app_api.add_resource(CheckCode, '/api/forgot-password/check-code')
 app_api.add_resource(ResetPassword, '/api/forgot-password/reset-password')
-# Auth checker app
-app_api.add_resource(AuthCheckedApp, '/api/checker/sign-in')
 # Films
 app_api.add_resource(MainScreenFilms, '/api/films/main-screen')
-app_api.add_resource(CurrentFilm, '/api/films/<film_id>')
-app_api.add_resource(FilmSessions, '/api/films/<film_id>/sessions')
+app_api.add_resource(CurrentFilm, '/api/films/<int:film_id>')
+app_api.add_resource(FilmSessions, '/api/films/<int:film_id>/sessions')
 # Cinema
 app_api.add_resource(CinemaScreen, '/api/cinema')
-app_api.add_resource(CinemaSessions, '/api/cinema/<cinema_id>/sessions')
+app_api.add_resource(CinemaSessions, '/api/cinema/<int:cinema_id>/sessions')
 # News
 app_api.add_resource(News, '/api/news')
 # Session
 app_api.add_resource(SessionHall, '/api/session/<int:session_id>')
 # Tickets
 app_api.add_resource(Tickets, '/api/tickets')
+# Checker ticket App
+app_api.add_resource(AuthCheckedApp, '/api/checker/sign-in')
+app_api.add_resource(CheckTicket, '/api/cinema/<int:cinema_id>/check-ticket/<string:ticket_number>')

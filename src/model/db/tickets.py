@@ -70,3 +70,14 @@ class TicketsModel(app_db.Model):
     @classmethod
     def get_user_tickets(cls, user_id):
         return cls.query.filter(cls.user_id == user_id, cls.number != None).all()
+
+    def get_all_user_ticket_for_session(self):
+        return TicketsModel.query.filter(TicketsModel.user_id == self.user_id, TicketsModel.number != None).all()
+
+    @classmethod
+    def get_ticket_use_number(cls, ticket_number: str):
+        return cls.query.filter(cls.number == ticket_number).first()
+
+    def check_ticket(self):
+        setattr(self, 'is_check', True)
+        app_db.session.commit()
