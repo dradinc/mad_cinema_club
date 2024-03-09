@@ -84,7 +84,7 @@ class SessionsModel(app_db.Model):
                 if item['row'] == seat.row:
                     item['seats'].append({
                         'id': seat.id,
-                        'is_empty': seat.is_empty,
+                        'seat': seat.seat,
                         'reservation': seat_state
                     })
                     is_continue = True
@@ -97,7 +97,7 @@ class SessionsModel(app_db.Model):
                 'row': seat.row,
                 'seats': [{
                     'id': seat.id,
-                    'is_empty': seat.is_empty,
+                    'seat': seat.seat,
                     'reservation': seat_state
                 }]
             })

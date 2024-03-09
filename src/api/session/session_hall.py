@@ -42,4 +42,3 @@ class SessionHall(Resource):
     def put(self, session_id: int):
         TicketsModel.pay_ticket(session_id, current_user)
         return json_response(status_=200)
-
