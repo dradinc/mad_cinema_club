@@ -23,7 +23,7 @@ class TicketsModel(app_db.Model):
 
     # columns
     id = Column(Integer, primary_key=True)
-    number = Column(String, nullable=True)
+    number = Column(String(10), nullable=True)
     # Внешний ключ с таблицей sessions
     sessions_id = Column(Integer, ForeignKey('sessions.id'))
     session = relationship('SessionsModel', back_populates='tickets')

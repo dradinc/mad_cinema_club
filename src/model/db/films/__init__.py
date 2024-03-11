@@ -26,15 +26,15 @@ class FilmsModel(app_db.Model):
     id = Column(Integer, primary_key=True)
     title = Column(String(64), nullable=False)
     poster = Column(String(32), nullable=False)
-    genre = Column(String, nullable=False)
-    trailers = Column(String, nullable=False)
+    genre = Column(String(256), nullable=False)
+    trailers = Column(String(256), nullable=False)
     eng_title = Column(String(64), nullable=True)
     god = Column(String(4), nullable=False)
     country = Column(String(32), nullable=False)
     timing = Column(Integer, nullable=False)
     age = Column(String(3), nullable=False)
     review_title = Column(String(128), nullable=True)
-    review_text = Column(String, nullable=False)
+    review_text = Column(String(512), nullable=False)
     # relationships
     sessions = relationship('SessionsModel', back_populates='film')
 
