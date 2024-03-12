@@ -37,9 +37,17 @@ class SignIn(Resource):
         if auth_user:
             if auth_user.check_password(request_args["password"]):
                 access_token = create_access_token(identity=auth_user.id)
+
+                user_info = {
+                    "name": auth_user.name,
+                    "email": auth_user.email,
+                    "balance": auth_user.balance
+                }
+
                 return json_response(
                     status_=200,
-                    access_token=access_token
+                    access_token=access_token,
+                    user_info=user_info
                 )
             else:
                 return json_response(
