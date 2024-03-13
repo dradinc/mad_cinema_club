@@ -35,6 +35,8 @@ class SignIn(Resource):
 
         auth_user = UsersModel.find_user_by_email(request_args['email'])
         if auth_user:
+            if not auth_user.password:
+                return json_response(status_=400, message=f'Пользователь не закончил регистрацию!')
             if auth_user.check_password(request_args["password"]):
                 access_token = create_access_token(identity=auth_user.id)
 

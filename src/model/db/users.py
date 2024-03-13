@@ -20,19 +20,18 @@ class UsersModel(app_db.Model):
 
     # columns
     id = Column(Integer, primary_key=True)
-    name = Column(String(64), nullable=False)
+    name = Column(String(64), nullable=True)
     email = Column(String(64), nullable=False)
-    password = Column(String(512), nullable=False)
+    password = Column(String(512), nullable=True)
     balance = Column(Integer, nullable=False, default=0)
     code = Column(String(6))
     is_checker = Column(Boolean, nullable=False, default=False)
     # relationships
     tickets = relationship('TicketsModel', back_populates='user')
 
-    def __init__(self, **kwargs):
-        self.name = kwargs.get('name')
-        self.email = kwargs.get('email')
-        self.password = generate_password_hash(kwargs.get('password'))
+    def __init__(self, new_email, new_name):
+        self.email = new_email
+        self.name = new_name
 
     def add_new_user(self):
         """
