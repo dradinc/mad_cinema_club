@@ -29,8 +29,9 @@ class UsersModel(app_db.Model):
     # relationships
     tickets = relationship('TicketsModel', back_populates='user')
 
-    def __init__(self, new_email):
+    def __init__(self, new_email, new_name):
         self.email = new_email
+        self.name = new_name
 
     def add_new_user(self):
         """

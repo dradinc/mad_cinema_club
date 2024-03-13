@@ -16,6 +16,11 @@ class SigUpSendCode(Resource):
         type=str,
         help='User Email'
     )
+    send_code.add_argument(
+        "name",
+        type=str,
+        help='User name'
+    )
 
     def post(self):
         # Получаем аргументы
@@ -24,18 +29,17 @@ class SigUpSendCode(Resource):
         # Проверяем все аргументы на наличие
         if not request_args['email']:
             return json_response(status_=400, message='Аргумент \'email\' отсутствует или не имеет данных')
+        if not request_args['name']:
+            return json_response(status_=400, message='Аргумент \'name\' отсутствует или не имеет данных')
 
         # Проверяем что пользователя с данным E-mail не существует или не закончил регистрацию
         check_users = UsersModel.find_user_by_email(email=request_args['email'])
         if check_users:
             if check_users.password:
-                return json_response(
-                    status_=400,
-                    message='Пользователь с данным E-mail уже существует'
-                )
+                return json_response(status_=400, message='Пользователь с данным E-mail уже существует')
         else:
             # Добавляем нового пользователя
-            check_users = UsersModel(new_email=request_args['email'])
+            check_users = UsersModel(new_email=request_args['email'], new_name=request_args['name'])
             check_users.add_new_user()
 
         # Генерируем новый код
@@ -59,7 +63,7 @@ class SigUpSendCode(Resource):
         )
 
 
-class SugUpCheckCode(Resource):
+class SigUpCheckCode(Resource):
 
     check_code_parse = reqparse.RequestParser()
     check_code_parse.add_argument(
@@ -91,6 +95,61 @@ class SugUpCheckCode(Resource):
         if check_user.code == request_args['code']:
             return json_response(
                 status_=200
+            )
+        else:
+            return json_response(
+                status_=412,
+                message='Не верный код'
+            )
+
+
+class SignUpSetPassword(Resource):
+
+    reset_password_pars = reqparse.RequestParser()
+    reset_password_pars.add_argument(
+        'email',
+        type=str,
+        help='User email'
+    )
+    reset_password_pars.add_argument(
+        'code',
+        type=str,
+        help='User verify code'
+    )
+    reset_password_pars.add_argument(
+        'new_password',
+        type=str,
+        help='New user password'
+    )
+
+    def post(self):
+        request_args = self.reset_password_pars.parse_args()
+
+        if not request_args['email']:
+            return json_response(
+                status_=400,
+                message=f'Аргумент \'email\' отсутствует или не содержит значений'
+            )
+        elif not request_args['code']:
+            return json_response(
+                status_=400,
+                message=f'Аргумент \'code\' отсутствует или не содержит значений'
+            )
+        elif not request_args['new_password']:
+            return json_response(
+                status_=400,
+                message=f'Аргумент \'new_password\' отсутствует или не содержит значений'
+            )
+
+        check_user = UsersModel.find_user_by_email(request_args['email'])
+        if check_user.code == request_args['code']:
+            check_user.edit_user(**{
+                'password': request_args['new_password'],
+                'code': ""
+            })
+            return json_response(
+                status_=200,
+                message="Успешная регистрация"
             )
         else:
             return json_response(
