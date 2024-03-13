@@ -9,7 +9,7 @@ app_api = Api(app)
 from src.api.test_request import TestRequest, TestJwtRequest
 
 # Auth user
-from src.api.auth.sign_up import SigUpSendCode
+from src.api.auth.sign_up import SigUpSendCode, SugUpCheckCode
 from src.api.auth.sign_in import SignIn
 from src.api.auth.forgot_password import SendCode, CheckCode, ResetPassword
 # Auth checker app
@@ -35,6 +35,7 @@ app_api.add_resource(TestRequest, '/api/test')
 app_api.add_resource(TestJwtRequest, '/api/test-jwt')
 # Auth user
 app_api.add_resource(SigUpSendCode, '/api/sign-up/send-code')
+app_api.add_resource(SugUpCheckCode, '/api/sign-up/check-code')
 app_api.add_resource(SignIn, '/api/sign-in')
 app_api.add_resource(SendCode, '/api/forgot-password/send-code')
 app_api.add_resource(CheckCode, '/api/forgot-password/check-code')

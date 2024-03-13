@@ -57,3 +57,43 @@ class SigUpSendCode(Resource):
             status_=200,
             message=f'Пароль отправлен на почту \'{request_args["email"]}\''
         )
+
+
+class SugUpCheckCode(Resource):
+
+    check_code_parse = reqparse.RequestParser()
+    check_code_parse.add_argument(
+        'email',
+        type=str,
+        help='User email'
+    )
+    check_code_parse.add_argument(
+        'code',
+        type=str,
+        help='User verify code'
+    )
+
+    def post(self):
+        request_args = self.check_code_parse.parse_args()
+
+        if not request_args['email']:
+            return json_response(
+                status_=400,
+                message=f'Аргумент \'email\' отсутствует или не содержит значений'
+            )
+        elif not request_args['code']:
+            return json_response(
+                status_=400,
+                message=f'Аргумент \'code\' отсутствует или не содержит значений'
+            )
+
+        check_user = UsersModel.find_user_by_email(request_args['email'])
+        if check_user.code == request_args['code']:
+            return json_response(
+                status_=200
+            )
+        else:
+            return json_response(
+                status_=412,
+                message='Не верный код'
+            )
