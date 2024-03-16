@@ -34,22 +34,26 @@ from src.api.check_ticket.check_ticket import CheckTicket
 app_api.add_resource(TestRequest, '/api/test')
 app_api.add_resource(TestJwtRequest, '/api/test-jwt')
 # Auth user
+app_api.add_resource(SignIn, '/api/sign-in')
+# Reg user
 app_api.add_resource(SigUpSendCode, '/api/sign-up/send-code')
 app_api.add_resource(SigUpCheckCode, '/api/sign-up/check-code')
 app_api.add_resource(SignUpSetPassword, '/api/sign-up/set-password')
-app_api.add_resource(SignIn, '/api/sign-in')
+# Reset Pass user
 app_api.add_resource(SendCode, '/api/forgot-password/send-code')
 app_api.add_resource(CheckCode, '/api/forgot-password/check-code')
 app_api.add_resource(ResetPassword, '/api/forgot-password/reset-password')
+# Profile
+# News
+app_api.add_resource(News, '/api/news')
 # Films
 app_api.add_resource(MainScreenFilms, '/api/films/main-screen')
+# Запрос на получение всех фильмов (НАДО СДЕЛАТЬ)
 app_api.add_resource(CurrentFilm, '/api/films/<int:film_id>')
 app_api.add_resource(FilmSessions, '/api/films/<int:film_id>/sessions')
 # Cinema
 app_api.add_resource(CinemaScreen, '/api/cinema')
 app_api.add_resource(CinemaSessions, '/api/cinema/<int:cinema_id>/sessions')
-# News
-app_api.add_resource(News, '/api/news')
 # Session
 app_api.add_resource(SessionHall, '/api/session/<int:session_id>')
 # Tickets

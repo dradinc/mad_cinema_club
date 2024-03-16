@@ -6,15 +6,13 @@ from src.model.db.films.sessions import SessionsModel
 from src.model.db.tickets import TicketsModel
 
 
-session_hall_parser = reqparse.RequestParser()
-session_hall_parser.add_argument(
-    'seat_id',
-    type=int,
-    help='Integer seat_id'
-)
-
-
 class SessionHall(Resource):
+    session_hall_parser = reqparse.RequestParser()
+    session_hall_parser.add_argument(
+        'seat_id',
+        type=int,
+        help='Integer seat_id'
+    )
 
     def get(self, session_id):
         current_session = SessionsModel.get_session(session_id)
@@ -26,7 +24,7 @@ class SessionHall(Resource):
 
     @jwt_required()
     def post(self, session_id: int):
-        request_args = session_hall_parser.parse_args()
+        request_args = self.session_hall_parser.parse_args()
         if not request_args['seat_id']:
             return json_response(
                 status_=400,

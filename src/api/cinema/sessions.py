@@ -2,24 +2,21 @@ from datetime import datetime
 
 from flask_restful import Resource, reqparse
 from flask_json import json_response
+from flask import url_for
 
 from src.model.db.films.sessions import SessionsModel
 
-from src import app
-
-
-cinema_session_parser = reqparse.RequestParser()
-cinema_session_parser.add_argument(
-    'date',
-    type=str,
-    help='Date sessions'
-)
-
 
 class CinemaSessions(Resource):
+    cinema_session_parser = reqparse.RequestParser()
+    cinema_session_parser.add_argument(
+        'date',
+        type=str,
+        help='Date sessions'
+    )
 
     def get(self, cinema_id):
-        request_args = cinema_session_parser.parse_args()
+        request_args = self.cinema_session_parser.parse_args()
         if not request_args['date']:
             return json_response(
                 status_=400,
@@ -66,8 +63,9 @@ class CinemaSessions(Resource):
                 )
             films_list.append({
                 'id': session.film.id,
-                'title': session.film.id,
-                'timing': session.film.id,
+                'poster': url_for('static', filename=f'poster/{session.film.poster}'),
+                'title': session.film.title,
+                'timing': session.film.timing,
                 'age': session.film.age,
                 'genre': genre_list,
                 'sessions': [{

@@ -20,7 +20,7 @@ class UsersModel(app_db.Model):
 
     # columns
     id = Column(Integer, primary_key=True)
-    name = Column(String(64), nullable=True)
+    name = Column(String(64), nullable=False)
     email = Column(String(64), nullable=False)
     password = Column(String(512), nullable=True)
     balance = Column(Integer, nullable=False, default=0)
