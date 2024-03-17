@@ -63,6 +63,12 @@ class UsersModel(app_db.Model):
     def find_user_by_email(cls, email):
         return cls.query.filter_by(email=email).first()
 
+    @classmethod
+    def add_user_balance(cls, user_id, plus_balance):
+        current_user = cls.query.filter(cls.id == user_id).first()
+        setattr(current_user, 'balance', current_user.balance + plus_balance)
+        app_db.session.commit()
+
 
 @app_jwt.user_lookup_loader
 def user_lookup_callback(_jwt_header, jwt_data):

@@ -1,6 +1,6 @@
 from flask import Flask
 
-from instance.config_server import Config
+from instance.config import Config
 
 app = Flask(__name__)
 app.config.from_object(Config)

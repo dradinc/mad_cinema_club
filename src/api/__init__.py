@@ -12,10 +12,13 @@ from src.api.test_request import TestRequest, TestJwtRequest
 from src.api.auth.sign_up import SigUpSendCode, SigUpCheckCode, SignUpSetPassword
 from src.api.auth.sign_in import SignIn
 from src.api.auth.forgot_password import SendCode, CheckCode, ResetPassword
+# Profile
+from src.api.profile import Profile
 # Auth checker app
 from src.api.check_ticket.auth import AuthCheckedApp
 # Films
 from src.api.films.main_screen import MainScreenFilms
+from src.api.films.all_films import AllFilms
 from src.api.films.current_film import CurrentFilm
 from src.api.films.sessions import FilmSessions
 # Cinema
@@ -44,11 +47,12 @@ app_api.add_resource(SendCode, '/api/forgot-password/send-code')
 app_api.add_resource(CheckCode, '/api/forgot-password/check-code')
 app_api.add_resource(ResetPassword, '/api/forgot-password/reset-password')
 # Profile
+app_api.add_resource(Profile, '/api/profile')
 # News
 app_api.add_resource(News, '/api/news')
 # Films
 app_api.add_resource(MainScreenFilms, '/api/films/main-screen')
-# Запрос на получение всех фильмов (НАДО СДЕЛАТЬ)
+app_api.add_resource(AllFilms, '/api/films')
 app_api.add_resource(CurrentFilm, '/api/films/<int:film_id>')
 app_api.add_resource(FilmSessions, '/api/films/<int:film_id>/sessions')
 # Cinema
@@ -60,4 +64,4 @@ app_api.add_resource(SessionHall, '/api/session/<int:session_id>')
 app_api.add_resource(Tickets, '/api/tickets')
 # Checker ticket App
 app_api.add_resource(AuthCheckedApp, '/api/checker/sign-in')
-app_api.add_resource(CheckTicket, '/api/cinema/<int:cinema_id>/check-ticket/<string:ticket_number>')
+app_api.add_resource(CheckTicket, '/api/checker/<int:cinema_id>/check-ticket/<string:ticket_number>')

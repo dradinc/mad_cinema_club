@@ -43,5 +43,9 @@ class FilmsModel(app_db.Model):
         return cls.query.limit(5).all()
 
     @classmethod
+    def get_all_films(cls):
+        return cls.query.all()
+
+    @classmethod
     def get_film_info(cls, film_id):
         return cls.query.filter(cls.id == film_id).first()

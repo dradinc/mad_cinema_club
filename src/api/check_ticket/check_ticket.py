@@ -5,6 +5,7 @@ from flask_json import json_response
 from flask_jwt_extended import jwt_required, current_user
 
 from src.model.db.tickets import TicketsModel
+from src.model.db.users import UsersModel
 
 
 class CheckTicket(Resource):
@@ -53,7 +54,6 @@ class CheckTicket(Resource):
             )
         else:
             # Проверяем что текущий билет не был использован ранее
-            app.logger.info(current_ticket.is_check)
             if current_ticket.is_check:
                 return json_response(
                     status_=406,
@@ -68,6 +68,7 @@ class CheckTicket(Resource):
             }
             for ticket in user_session_tickets:
                 ticket.check_ticket()
+                UsersModel.add_user_balance(ticket.user_id, int(ticket.session.price * 0.10))
                 ticket_info['seat_list'].append({
                     'row': ticket.seat.row,
                     'seat': ticket.seat.seat
