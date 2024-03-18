@@ -1,29 +1,23 @@
 from datetime import datetime
 
-from flask_restful import Resource, reqparse
+from flask_restful import Resource
 from flask_json import json_response
-from flask import url_for
+from flask import url_for, request
 
 from src.model.db.films.sessions import SessionsModel
 
 
 class CinemaSessions(Resource):
-    cinema_session_parser = reqparse.RequestParser()
-    cinema_session_parser.add_argument(
-        'date',
-        type=str,
-        help='Date sessions'
-    )
 
     def get(self, cinema_id):
-        request_args = self.cinema_session_parser.parse_args()
-        if not request_args['date']:
+        current_date = request.args.get('date')
+        if not current_date:
             return json_response(
                 status_=400,
                 message='Аргумент \'date\' отсутствует или является пустым'
             )
         try:
-            date = datetime.strptime(request_args['date'], '%Y-%m-%d').date()
+            date = datetime.strptime(current_date, '%Y-%m-%d').date()
         except ValueError:
             return json_response(
                 status_=400,
